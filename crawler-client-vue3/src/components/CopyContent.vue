@@ -2,6 +2,7 @@
   <div class="btn-box">
     <el-button @click="copy(title)">复制标题</el-button>
     <el-button @click="copy(content)">复制内容（markdown）</el-button>
+    <el-button @click="download">下载markdown</el-button>
   </div>
   <div class="title">
     {{title}}
@@ -23,7 +24,7 @@ export default {
       type: String,
     },
   },
-  setup () {
+  setup (props) {
     async function copy (text) {
       try {
         await writeText(text)
@@ -31,8 +32,22 @@ export default {
         console.log(err)
       }
     }
+
+    function download () {
+      const { title, content } = props
+      const blob = new Blob([title + '\n\t\n\t' + content])
+      const link = document.createElement('a')
+      link.download = title + '.md'
+      link.style.display = 'none'
+      link.href = URL.createObjectURL(blob)
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
+
     return {
       copy,
+      download,
     }
   },
 }
