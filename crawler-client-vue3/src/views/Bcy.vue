@@ -75,6 +75,7 @@ export default defineComponent({
       // console.log(selectList.value)
       const pics = selectList.value.map(url => {
         if (url.includes('item') || url.includes('user')) {
+          // 目前是这样，未来不知道
           return 'https://img-bcy-qn.pstatp.com' + url.split('~tplv-banciyuan-w650')[0].split('img/banciyuan')[1]
         }
         return url.replace('~tplv-banciyuan-w650', '~noop')
