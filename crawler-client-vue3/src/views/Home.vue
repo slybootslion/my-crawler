@@ -3,6 +3,11 @@
     <h1 class="title">一个帮助爬取页面的小工具 by SlybootsLion</h1>
     <div class="txt">快速将掘金、知乎、微信公众号内容转为markdown</div>
     <div class="txt">批量下载半次元高清无水印图片。</div>
+
+    <div>
+      使用必读：
+      <p></p>
+    </div>
   </div>
 </template>
 
