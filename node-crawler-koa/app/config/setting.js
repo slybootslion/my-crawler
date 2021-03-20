@@ -9,7 +9,6 @@ module.exports = {
   isProduction,
   countDefault: 10,
   pageDefault: 0,
-  // 指定工作目录，默认为 process.cwd() 路径
   baseDir: path.resolve(__dirname, '../../'),
   staticPath: path.resolve(__dirname, '../../dist'),
   accessExp: 60 * 60 + 30, // 2h + 0.5分钟 单位秒
