@@ -13,6 +13,9 @@ const config: AxiosRequestConfig = {
   },
   method: 'get',
 }
+const NODE_ENV = process.env.NODE_ENV
+if (NODE_ENV !== 'development') config.baseURL = 'http://n1.sketchmac.com/'
+console.log(config)
 
 function showMessage (message: string, type: MessageType = 'error', duration = 1200) {
   ElMessage({ message, type, duration })
