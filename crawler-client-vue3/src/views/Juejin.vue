@@ -13,7 +13,7 @@ import JuejinApi from '@/api/models/JuejinApi'
 import UrlBar from '@/components/UrlBar'
 import CopyContent from '@/components/CopyContent'
 import html2md from '@/views/hook/html2md'
-import { clearLoading } from '@/views/hook/clearLoading'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Juejin',
@@ -21,12 +21,13 @@ export default defineComponent({
   setup () {
     const title = ref('')
     const md = ref('')
+    const store = useStore()
 
     async function getJuejin (url) {
       const res = await JuejinApi.getJuejin(url)
       title.value = res.title
       md.value = html2md(res.content, 'juejin')
-      clearLoading()
+      store.commit('changeLoading', false)
     }
 
     return {

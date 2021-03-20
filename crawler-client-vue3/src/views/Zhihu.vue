@@ -13,7 +13,7 @@ import ZhihuApi from '@/api/models/ZhihuApi'
 import html2md from '@/views/hook/html2md'
 import CopyContent from '@/components/CopyContent'
 import UrlBar from '@/components/UrlBar'
-import { clearLoading } from '@/views/hook/clearLoading'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Zhihu',
@@ -21,12 +21,13 @@ export default defineComponent({
   setup () {
     const title = ref('')
     const md = ref('')
+    const store = useStore()
 
     async function getZhihu (url) {
       const res = await ZhihuApi.getZhihu(url)
       title.value = res.title
       md.value = html2md(res.content, 'zhihu')
-      clearLoading()
+      store.commit('changeLoading', false)
     }
 
     return {

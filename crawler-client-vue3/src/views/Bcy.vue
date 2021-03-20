@@ -32,7 +32,7 @@ import { defineComponent, ref } from 'vue'
 import { BcyApi } from '@/api'
 import checkUrl from '@/components/hook/checkUrl'
 import UrlBar from '@/components/UrlBar'
-import { clearLoading } from '@/views/hook/clearLoading'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Bcy',
@@ -42,13 +42,14 @@ export default defineComponent({
     const picList = ref([])
     const selectList = ref([])
     const checkAll = ref(true)
+    const store = useStore()
 
     // methods
     async function getBcy (url) {
       if (!checkUrl(url)) return false
       const res = await BcyApi.getXiaoJieJie({ url })
       selectList.value = picList.value = res
-      clearLoading()
+      store.commit('changeLoading', false)
     }
 
     function handleCheckAllChange (val) {
