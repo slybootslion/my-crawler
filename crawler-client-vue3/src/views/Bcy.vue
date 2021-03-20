@@ -1,6 +1,7 @@
 <template>
   <div class="bcy-container">
-    <UrlBar title="bcy" @goCrawler="getBcy"/>
+    <UrlBar title="bcy"
+            @goCrawler="getBcy"/>
     <div class="pic-content" v-if="picList.length">
       <div class="click-all">
         <el-checkbox v-model="checkAll"
@@ -31,6 +32,7 @@ import { defineComponent, ref } from 'vue'
 import { BcyApi } from '@/api'
 import checkUrl from '@/components/hook/checkUrl'
 import UrlBar from '@/components/UrlBar'
+import { clearLoading } from '@/views/hook/clearLoading'
 
 export default defineComponent({
   name: 'Bcy',
@@ -43,9 +45,10 @@ export default defineComponent({
 
     // methods
     async function getBcy (url) {
-      if (!checkUrl(url)) return
+      if (!checkUrl(url)) return false
       const res = await BcyApi.getXiaoJieJie({ url })
       selectList.value = picList.value = res
+      clearLoading()
     }
 
     function handleCheckAllChange (val) {

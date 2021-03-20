@@ -13,6 +13,7 @@ import JuejinApi from '@/api/models/JuejinApi'
 import UrlBar from '@/components/UrlBar'
 import CopyContent from '@/components/CopyContent'
 import html2md from '@/views/hook/html2md'
+import { clearLoading } from '@/views/hook/clearLoading'
 
 export default defineComponent({
   name: 'Juejin',
@@ -25,6 +26,7 @@ export default defineComponent({
       const res = await JuejinApi.getJuejin(url)
       title.value = res.title
       md.value = html2md(res.content, 'juejin')
+      clearLoading()
     }
 
     return {

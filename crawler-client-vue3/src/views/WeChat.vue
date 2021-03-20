@@ -13,6 +13,7 @@ import UrlBar from '@/components/UrlBar'
 import weChatApi from '@/api/models/WeChat'
 import CopyContent from '@/components/CopyContent'
 import html2md from '@/views/hook/html2md'
+import { clearLoading } from '@/views/hook/clearLoading'
 
 export default defineComponent({
   name: 'WeChat',
@@ -25,6 +26,7 @@ export default defineComponent({
       const res = await weChatApi.getWeChat(url)
       title.value = res.title
       md.value = html2md(res.content)
+      clearLoading()
     }
 
     return {
