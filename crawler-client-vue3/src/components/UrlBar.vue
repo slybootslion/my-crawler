@@ -14,7 +14,6 @@
 import { computed, defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 import checkUrl from '@/components/hook/checkUrl'
-import { createLoadin } from '@/views/hook/clearLoading'
 
 export default defineComponent({
   name: 'UrlBar',
@@ -32,7 +31,7 @@ export default defineComponent({
 
     function goCrawler () {
       if (!checkUrl(url.value)) return false
-      createLoadin()
+      store.commit('changeLoading', true)
       emit('goCrawler', url.value)
     }
 
