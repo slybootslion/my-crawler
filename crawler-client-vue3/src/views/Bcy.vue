@@ -72,7 +72,6 @@ export default defineComponent({
     }
 
     function downloadPic () {
-      // console.log(selectList.value)
       const pics = selectList.value.map(url => {
         if (url.includes('item') || url.includes('user')) {
           // 目前是这样，未来不知道
@@ -80,10 +79,10 @@ export default defineComponent({
         }
         return url.replace('~tplv-banciyuan-w650', '~noop')
       })
-      // console.log(pics)
       for (let i = 0; i < pics.length; i++) {
         download(pics[i])
       }
+      url.value = ''
       picList.value = []
     }
 
