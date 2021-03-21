@@ -7,6 +7,20 @@ class UrlValidator extends LinValidator {
   }
 }
 
+class PwdValidator extends LinValidator {
+  constructor () {
+    super()
+    this.password = [
+      new Rule(
+        'matches',
+        '密码需要6-32个数字字母组合',
+        /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,32}$/
+      ),
+    ]
+  }
+}
+
 export {
-  UrlValidator
+  UrlValidator,
+  PwdValidator,
 }

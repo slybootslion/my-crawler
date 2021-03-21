@@ -42,4 +42,13 @@ export default defineComponent({
 .st {
   font-weight: 700;
 }
+
+.backdoorbell {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+}
 </style>
