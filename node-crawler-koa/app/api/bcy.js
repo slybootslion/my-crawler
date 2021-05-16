@@ -20,4 +20,11 @@ bcyApi.post('/', async ctx => {
   ctx.json({ password })
 })
 
+bcyApi.get('/hentaicosplay', async ctx => {
+  const v = await new UrlValidator().validate(ctx)
+  const {url} = v.get('query')
+  const res = await new BcyDao(url).getHentaiCosplay()
+  ctx.json(res)
+})
+
 export default bcyApi
