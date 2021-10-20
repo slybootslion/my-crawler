@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tools</title>
+</head>
+<div id="content"></div>
+<body>
+<script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    const makeJsonToArray = async (jsonFile) => {
+        const data = await $.getJSON(jsonFile)
+        console.log(data.length)
+        let h = '['
+        for (let i = 0; i < data.length; i++) {
+            const item = data[i]
+            h += `"${item.url}",`
+        }
+        $('#content').html(h + ']')
+        // const html = data.map(item => item.url)
+        // console.log(html)
+        // $('#content').html(html.join(','))
+    }
+    makeJsonToArray('./xxx.json')
+</script>
+</body>
+</html>
