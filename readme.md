@@ -10,11 +10,11 @@
 
 - node-crawler-koa
 
-上面这两个是最早写的，selenium爬去文章和bcy的图。不过很久没更新不知道还能不能用。
+上面这两个是最早写的，selenium爬取文章转markdown还有下载单个bcy的专辑图。不过很久没更新不知道还能不能用。
 
 - python_xiaojiejie
 
-这个是之后用scrapy写的，爬取luohuaxiu、u2ku的cos图，自己用的时候还可以，如果网站改版了就用不成了。反正我是用这个爬取了二三十个G的cosplay图。
+这个是之后用scrapy写的，爬取luohuaxiu、u2ku的图，自己用的时候还可以，如果网站改版了就用不成了。反正我是用这个爬取了二三十个G的图。
 
 - python-bcy-likes-download
 
