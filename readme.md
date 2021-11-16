@@ -1,5 +1,38 @@
 <img class="banner-pic" src="http://oss.slybootslion.com/blog/Konachan.com - 313616 anthropomorphism azur_lane belfast_(azur_lane) blue_eyes breasts cleavage formidable_(azur_lane) logo long_hair miyase_mahiro red_eyes white_hair.jpg?x-oss-process=image/auto-orient,1/quality,q_80/watermark,text_c2x5Ym9vdHNsaW9u,color_ffffff,size_40,shadow_70,t_74,x_10,y_10"/>
 
+### 2021年11月16日更新
+
+之后又更新了几次，但是什么说明都没有，趁着这次补充一下：
+
+这四个文件夹分别是什么：
+
+- crawler-client-vue3
+
+- node-crawler-koa
+
+上面这两个是最早写的，selenium爬去文章和bcy的图。不过很久没更新不知道还能不能用。
+
+- python_xiaojiejie
+
+这个是之后用scrapy写的，爬取luohuaxiu、u2ku的cos图，自己用的时候还可以，如果网站改版了就用不成了。反正我是用这个爬取了二三十个G的cosplay图。
+
+- python-bcy-likes-download
+
+下载bcy收藏或者点过喜欢的专辑，因为也是懒没有做浏览器控制自动输账号密码这些工作，所以cookie信息和自己的id号要手动写到代码里。
+
+下载的效果类似下面这样，100多个cosplay的专辑共1.4G的图片，几分钟就下OK了。
+
+![](http://oss.slybootslion.com/static/gif_crawler_bcy.gif)
+
+![](http://oss.slybootslion.com/static/png_crawler_bcy.png)
+
+直接在下高清大图，根据文件夹放好，我觉得还不错。
+
+不过现在bcy也没啥好下的了，质量大不如前，也可能是我没遇到喜欢的。
+
+这个也就是自己写着玩的东西，没有想更新迭代，文档后面的内容爱看不看，反正python的这两个项目我也没有写用法。
+
+
 ### 必读
 
 首先这是一个春节假期无聊随便写着玩的东西，没有想过要长期维护更新，代码写的挺low的。
@@ -8,19 +41,16 @@
 
 ~~**吐槽：早知道要布到线上，我就应该用python写。**~~
 
-
-**--- 2021-03-20 更新在线地址 ---**
-
-~~[在线地址](http://n1.sketchmac.com/)~~（停止提供在线版本）
+~~**--- 2021-03-20 更新在线地址 ---**~~（停止提供在线版本）
 
 ~~**注意：尽量布本地环境来用，我的服务器是个弱鸡，随时可能崩。**~~
 
 
-更新：
+~~更新：~~
 
-布到了线上，所以将selenium调整成了静默模式，同时更新了Linux的selenium驱动。
+~~布到了线上，所以将selenium调整成了静默模式，同时更新了Linux的selenium驱动。~~
 
-删掉了之前随意写的无用注释，不过也没人看吧。
+~~删掉了之前随意写的无用注释，不过也没人看吧。~~
 
 
 **--- 2021-03-05 更新使用方法 ---**
