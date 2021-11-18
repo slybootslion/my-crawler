@@ -1,22 +1,24 @@
+import json
 import os
 from time import sleep
 
 import requests
 import scrapy
 
-from picture_work.items import BcyPictureDownloadItem
 from picture_work.utils.tools import bcy_json_str2dict
 
 
-class BcylistSpider(scrapy.Spider):
-    name = 'bcylist'
+# 标注过喜欢的全部下载完之后，运行这个可以将喜欢清空
+class BcyDislikeSpider(scrapy.Spider):
+    name = 'bcydislike'
     user_id = '0000000'  # 这里填对应的用户id
+    dislike_url = 'https://bcy.net/apiv3/item/unlike'
     base_url = 'https://bcy.net/u/{}/like'.format(user_id)
     json_url = 'https://bcy.net/apiv3/user/favor'
-    cookies = {}
     headers = {
         'User-Agent': "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"
     }
+    cookies = {}
 
     def start_requests(self):
         # cookie文件 在浏览器里登录把cookie复制到cookies.txt文件中
@@ -25,7 +27,6 @@ class BcylistSpider(scrapy.Spider):
             name, value = line.strip().split('=', 1)
             self.cookies[name] = value
         yield scrapy.Request(cookies=self.cookies,
-                             headers=self.headers,
                              url=self.base_url)
 
     def parse(self, response, **kwargs):
@@ -39,7 +40,7 @@ class BcylistSpider(scrapy.Spider):
 
         params = {
             'uid': self.user_id,
-            'ptype': 'like',
+            'ptype': 'like',  # collect 收藏 like 喜欢
             'mid': self.user_id,
             'since': first_page_last_since,
             'size': '1000',
@@ -55,27 +56,33 @@ class BcylistSpider(scrapy.Spider):
                 likes_ids.append(item.get('item_detail').get('item_id'))
             params['since'] = data[-1].get('since')
 
-        for likes_id in likes_ids:
-            sleep(1.5)  # 每个like停留一点时间，否则会被bcy的反爬拉黑。
-            url = 'https://bcy.net/item/detail/{}'.format(likes_id)
-            print(url)
-            yield scrapy.Request(url=url, callback=self.pic_detail, dont_filter=True)
+        print(len(likes_ids))
 
-    def pic_detail(self, response):
-        txt = response.body.decode(response.encoding)
-        d = bcy_json_str2dict(txt)
-        detail = d.get('detail')
-        post_data = detail.get('post_data')
-        uname = detail.get('detail_user').get('uname')
-        item_id = post_data.get('item_id')
-        images = []
-        for pic_item in post_data.get('multi'):
-            pic = {
-                'type': pic_item.get('format'),
-                'url': pic_item.get('original_path'),
-            }
-            pic['filename'] = pic['url'].split('/')[-1].split('~')[0]
-            images.append(pic)
-        folder_name = '{}_{}'.format(uname, item_id)
-        item = BcyPictureDownloadItem(images=images, folder_name=folder_name)
-        yield item
+        for item_id in likes_ids:
+            sleep(1)
+            meta = {'item_id': item_id}
+            url = 'https://bcy.net/item/detail/{}'.format(item_id)
+            yield scrapy.Request(url=url, callback=self.dislike_method, dont_filter=True, meta=meta)
+
+    def dislike_method(self, response):
+        item_id = response.meta.get('item_id')
+        cookies = response.headers.getlist('set-cookie')
+        for cookie in cookies:
+            cookie_list = bytes.decode(cookie).split(';')
+            for item in cookie_list:
+                key_val = item.split('=')
+                if len(key_val) > 1:
+                    key = key_val[0].strip()
+                    val = key_val[1].strip()
+                    self.cookies[key] = val
+        _csrf_token = bytes.decode(response.headers.getlist('set-cookie')[1]).split(';')[0].split('=')[1]
+        data = {
+            'item_id': item_id,
+            '_csrf_token': _csrf_token,
+        }
+        print(data)
+        res = requests.post(url=self.dislike_url,
+                            data=data,
+                            headers=self.headers,
+                            cookies=self.cookies)
+        print(res.text)  # 返回的code是0就是成功
